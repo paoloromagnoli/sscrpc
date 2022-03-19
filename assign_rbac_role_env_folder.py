@@ -2,7 +2,7 @@ import sys, re, argparse
 from typing import Dict
 from sseapiclient import APIClient
 
-# basic function to read input params, just look for: -h --help -f --folder -e --env
+# basic function to read input params
 def read_param(argv):
     # https://docs.python.org/3/library/argparse.html#module-argparse
     # return a dict with {'env': 'environment_name', 'role': 'role_name', 'write': True/False, 'delete': True/False, ['folder': 'folder_name']}
