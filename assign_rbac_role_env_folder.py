@@ -8,6 +8,12 @@ def read_param(argv):
     # return a dict with {'env': 'environment_name', 'role': 'role_name', 'write': True/False, 'delete': True/False, ['folder': 'folder_name']}
 
     parser = argparse.ArgumentParser(description='Grants SaltStack provided Role with RBAC permission access for files in Saltstack backend, either to all files in the specififed environment or to files in the optionally specified folder. By default assignes both Read and Discover grants.')
+    parser.add_argument('host', nargs=1,
+                        help='the RaaS url on your SaltStack instance provides as http:s//<FQDN> or https://<IP_ADDRESS>')
+    parser.add_argument('username', nargs=1,
+                        help='the SaltStack username')
+    parser.add_argument('password', nargs=1,
+                        help='the SaltStack password')
     parser.add_argument('env', nargs=1,
                         help='the SaltStack environment to be granted access to')
     parser.add_argument('role', nargs=1,
@@ -23,6 +29,9 @@ def read_param(argv):
     args = vars(parser.parse_args())
 
     param = {}
+    param["host"] = args["host"][0]
+    param["username"] = args["username"][0]
+    param["password"] = args["password"][0]
     param["env"] = args["env"][0]
     param["role"] = args["role"][0]
     param["write"] = args["w__write"]
@@ -33,15 +42,19 @@ def read_param(argv):
     
     return param
 
-#connection info
-ssc_host = 'https://vrassc.iberia.local'
-username = 'root'
-password = '@nill0T3!'
+# variables
 response = None
 access = {}
 grants = {'read': True, 'discover': True}
 
 parameters = read_param(sys.argv[1:])
+
+#connection info
+ssc_host = parameters["host"]
+username = parameters["username"]
+password = parameters["password"]
+
+# permissions
 grants["write"]=parameters["write"]
 grants["delete"]=parameters["delete"]
 access[parameters["role"]]=grants
