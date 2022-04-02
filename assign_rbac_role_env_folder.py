@@ -7,7 +7,7 @@ def read_param(argv):
     # https://docs.python.org/3/library/argparse.html#module-argparse
     # return a dict with {'env': 'environment_name', 'role': 'role_name', 'write': True/False, 'delete': True/False, ['folder': 'folder_name']}
 
-    parser = argparse.ArgumentParser(description='Grants SaltStack provided Role with RBAC permission access for files in Saltstack backend, either to all files in the specififed environment or to files in the optionally specified folder. By default assignes both Read and Discover grants.')
+    parser = argparse.ArgumentParser(description='Grants SaltStack provided Role with RBAC permission access for files in Saltstack backend, either to all files in the specififed environment or to files in the optionally specified folder and its subfolders. By default assignes both Read and Discover grants.')
     parser.add_argument('host', nargs=1,
                         help='the RaaS url on your SaltStack instance provides as http:s//<FQDN> or https://<IP_ADDRESS>')
     parser.add_argument('username', nargs=1,
@@ -23,7 +23,7 @@ def read_param(argv):
     parser.add_argument('-d' "--delete", action='store_true',
                         help='assignes delete permission')
     parser.add_argument('-f', '--folder', metavar='folder', nargs=1,
-                        help='grant access only to files in the specified folder')
+                        help='grant access to files in the specified folder and its subfolders')
     parser.add_argument('-v' "--verbose", action='store_true',
                     help='print alls files that have been granted access to')
     args = vars(parser.parse_args())
